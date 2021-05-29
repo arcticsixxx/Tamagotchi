@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <conio.h>
 
 using namespace std;
 
@@ -37,12 +38,42 @@ void Screen()
     cout << "                               |                      $$$$   $$$$$          |\n";
     cout << "                               |                                            |\n";
     cout << "                               +--------------------------------------------+\n";
+    cout << "                                                 HOW TO PLAY?                \n";
+    cout << "                                     Z - FEED X - PLAY C - HEAL V - EXIT     \n";
+}
+
+void Start()
+{
+    isOver = false;
+}
+
+void Input()
+{
+    if (_kbhit()) {
+        switch (_getch())
+        {
+        case 'z':
+            hunger += 10;
+            break;
+        case 'x':
+            mood += 6;
+            break;
+        case 'c':
+            health += 9;
+            break;
+        case 'v':
+            isOver = true;
+            system("cls");
+            cout << "GAMEOVER";
+            break;
+        }
+    }
 }
 
 void Logic()
 {
 
-    Sleep(100);
+    Sleep(1000);
     hunger -= 1;
 
     if (health == 0 || health < 0) {
@@ -70,22 +101,12 @@ void Logic()
 
 }
 
-void Input()
-{
-
-}
-
-void Start()
-{
-    isOver = false;
-}
-
 int main()
 {
-
     Start();
     while (!isOver) {
         Screen();
+        Input();
         Logic();
     }
 }

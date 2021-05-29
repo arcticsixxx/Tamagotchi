@@ -1,5 +1,6 @@
 # depslib dependency file v1.0
-1622308478 source:d:\github\tamagotchi\tamagotchi\main.cpp
+1622312567 source:d:\github\tamagotchi\tamagotchi\main.cpp
 	<iostream>
 	<windows.h>
+	<conio.h>
 

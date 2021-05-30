@@ -1,6 +1,7 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include <ctime>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ void Screen()
     cout << "                               |                  $   $        $   $        |\n";
     cout << "                               |                  $     $$$$$$     $        |\n";
     cout << "                               |                  $    sss   sss    $       |\n";
-    cout << "                               |                  $    ³³     ³³     $      |\n";
+    cout << "                               |                  $     @     @      $      |\n";
     cout << "                               |                 $       $$$        $       |\n";
     cout << "                               |     $$$$$$$$     $       $        $        |\n";
     cout << "                               |   $$        $       $$         $$          |\n";
@@ -93,7 +94,7 @@ void Logic()
 {
 
     if (!isOver) {
-        Sleep(1400);
+        Sleep(1000) ;
         hunger -= 1;
     }
 
@@ -104,21 +105,23 @@ void Logic()
     }
 
     if (hunger < 75 && hunger > 50) {
-        Sleep(1000);
-        mood -= 1;
+        Sleep(2500);
+        mood -= (rand() % 3);
         health -= 1;
     }
 
     if (hunger <= 50 && hunger > 25) {
         Sleep(1000);
-        mood -= 2;
+        mood -= (rand() % 4);
         health -= 3;
     }
 
     if (hunger <= 25) {
-        mood -= 5;
+        mood -= (rand() % 5);
         health -= 4;
     }
+
+
 
 }
 
@@ -142,6 +145,7 @@ void Check()
 
 int main()
 {
+    srand(time(NULL));
     Start();
     while (!isOver) {
         Screen();

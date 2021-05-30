@@ -17,34 +17,52 @@ void Screen()
     cout << "                               +--------------+--------------+--------------+\n";
     cout << "                               | HEALTH: "<<health<<"% | MOOD: "<<mood<<"%   | HUNGER: "<<hunger<<"%  |\n";
     cout << "                               +--------------+--------------+--------------+\n";
-    cout << "                               |                    $$            $$        |\n";
-    cout << "                               |                   $   $        $   $       |\n";
-    cout << "                               |                   $     $$$$$$     $       |\n";
-    cout << "                               |                   $    sss   sss    $      |\n";
-    cout << "                               |                   $    ³³     ³³     $     |\n";
-    cout << "                               |                  $       $$$        $      |\n";
-    cout << "                               |      $$$$$$$$     $       $        $       |\n";
-    cout << "                               |    $$        $       $$         $$         |\n";
-    cout << "                               |     $         $     $   $$$$$$   $         |\n";
-    cout << "                               |        $      $    $  $        $  $        |\n";
-    cout << "                               |        $     $    $  $          $  $       |\n";
-    cout << "                               |       $    $   $$$$  $          $  $$$$    |\n";
-    cout << "                               |      $   $    $    $  $        $   $   $   |\n";
-    cout << "                               |      $  $     $    $  $        $  $    $   |\n";
-    cout << "                               |       $  $      $    $   $ $     $   $     |\n";
-    cout << "                               |        $   $$$$$ $ $     $ $    $   $      |\n";
-    cout << "                               |           $$$$$ $    $    $     $    $     |\n";
-    cout << "                               |                 $$$ $     $      $ $$$     |\n";
-    cout << "                               |                      $$$$   $$$$$          |\n";
+    cout << "                               |                                            |\n";
+    cout << "                               |                   $$            $$         |\n";
+    cout << "                               |                  $   $        $   $        |\n";
+    cout << "                               |                  $     $$$$$$     $        |\n";
+    cout << "                               |                  $    sss   sss    $       |\n";
+    cout << "                               |                  $    ³³     ³³     $      |\n";
+    cout << "                               |                 $       $$$        $       |\n";
+    cout << "                               |     $$$$$$$$     $       $        $        |\n";
+    cout << "                               |   $$        $       $$         $$          |\n";
+    cout << "                               |    $         $     $   $$$$$$   $          |\n";
+    cout << "                               |       $      $    $  $        $  $         |\n";
+    cout << "                               |       $     $    $  $          $  $        |\n";
+    cout << "                               |      $    $   $$$$  $          $  $$$$     |\n";
+    cout << "                               |     $   $    $    $  $        $   $   $    |\n";
+    cout << "                               |     $  $     $    $  $        $  $    $    |\n";
+    cout << "                               |      $  $      $    $   $ $     $   $      |\n";
+    cout << "                               |       $   $$$$$ $ $     $ $    $   $       |\n";
+    cout << "                               |          $$$$$ $    $    $     $    $      |\n";
+    cout << "                               |                $$$ $     $      $ $$$      |\n";
+    cout << "                               |                     $$$$   $$$$$           |\n";
     cout << "                               |                                            |\n";
     cout << "                               +--------------------------------------------+\n";
     cout << "                                                 HOW TO PLAY?                \n";
-    cout << "                                     Z - FEED X - PLAY C - HEAL V - EXIT     \n";
+    cout << "                                  Z - FEED | X - PLAY | C - HEAL | V - EXIT  \n";
 }
 
 void Start()
 {
     isOver = false;
+}
+
+void GameOver()
+{
+    cout << endl;
+    cout << endl;
+    cout <<"                                $$$$    $$$$   $$   $  $$$$$ \n";
+    cout <<"                               $$      $$  $$  $$$ $$  $$    \n";
+    cout <<"                               $$ $$$  $$$$$$  $$ $ $  $$$$  \n";
+    cout <<"                               $$  $$  $$  $$  $$   $  $$    \n";
+    cout <<"                                $$$$   $$  $$  $$   $  $$$$$ \n";
+    cout <<"                                                             \n";
+    cout <<"                                $$$$   $$  $$  $$$$$   $$$$$ \n";
+    cout <<"                               $$  $$  $$  $$  $$      $$  $$\n";
+    cout <<"                               $$  $$  $$  $$  $$$$    $$$$$ \n";
+    cout <<"                               $$  $$   $$$$   $$      $$  $$\n";
+    cout <<"                                $$$$     $$    $$$$$   $$  $$\n";
 }
 
 void Input()
@@ -57,6 +75,7 @@ void Input()
             break;
         case 'x':
             mood += 6;
+            hunger -= 7;
             break;
         case 'c':
             health += 9;
@@ -64,7 +83,7 @@ void Input()
         case 'v':
             isOver = true;
             system("cls");
-            cout << "GAMEOVER";
+            GameOver();
             break;
         }
     }
@@ -73,13 +92,15 @@ void Input()
 void Logic()
 {
 
-    Sleep(1000);
-    hunger -= 1;
+    if (!isOver) {
+        Sleep(1400);
+        hunger -= 1;
+    }
 
-    if (health == 0 || health < 0) {
+    if (health == 0) {
         isOver = true;
         system("cls");
-        cout << "GAMEOVER";
+        GameOver();
     }
 
     if (hunger < 75 && hunger > 50) {
@@ -101,6 +122,24 @@ void Logic()
 
 }
 
+void Check()
+{
+    if (hunger > 100)
+        hunger = 100;
+    if (mood > 100)
+        mood = 100;
+    if (health > 100)
+        health =100;
+
+    if (hunger < 0 )
+        hunger = 0;
+    if (mood < 0)
+        mood = 0;
+    if (health < 0)
+        health = 0;
+}
+
+
 int main()
 {
     Start();
@@ -108,5 +147,12 @@ int main()
         Screen();
         Input();
         Logic();
+        Check();
     }
 }
+
+
+
+
+
+

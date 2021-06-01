@@ -1,14 +1,27 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
-#include <ctime>
+#include <chrono>
+#include <thread>
 
 using namespace std;
+using namespace std::chrono_literals;
 
-bool isOver;
-int health = 100;
-int hunger = 100;
-int mood = 100;
+struct Components
+{
+    bool isOver;
+    int health = 100;
+    int hunger = 100;
+    int mood = 100;
+};
+
+Components c;
+
+void Start()
+{
+    c.isOver = false;
+}
+
 
 void Screen()
 {
@@ -16,7 +29,7 @@ void Screen()
     cout << endl;
     cout << endl;
     cout << "                               +--------------+--------------+--------------+\n";
-    cout << "                               | HEALTH: "<<health<<"% | MOOD: "<<mood<<"%   | HUNGER: "<<hunger<<"%  |\n";
+    cout << "                               | HEALTH: "<<c.health<<"% | MOOD: "<<c.mood<<"%   | HUNGER: "<<c.hunger<<"%  |\n";
     cout << "                               +--------------+--------------+--------------+\n";
     cout << "                               |                                            |\n";
     cout << "                               |                   $$            $$         |\n";
@@ -42,11 +55,8 @@ void Screen()
     cout << "                               +--------------------------------------------+\n";
     cout << "                                                 HOW TO PLAY?                \n";
     cout << "                                  Z - FEED | X - PLAY | C - HEAL | V - EXIT  \n";
-}
+    cout << "                                                                               ";
 
-void Start()
-{
-    isOver = false;
 }
 
 void GameOver()
@@ -72,17 +82,17 @@ void Input()
         switch (_getch())
         {
         case 'z':
-            hunger += 10;
+            c.hunger += 10;
             break;
         case 'x':
-            mood += 6;
-            hunger -= 7;
+            c.mood += 6;
+            c.hunger -= 7;
             break;
         case 'c':
-            health += 9;
+            c.health += 9;
             break;
         case 'v':
-            isOver = true;
+            c.isOver = true;
             system("cls");
             GameOver();
             break;
@@ -93,61 +103,64 @@ void Input()
 void Logic()
 {
 
-    if (!isOver) {
-        Sleep(1000) ;
-        hunger -= 1;
+    if (!c.isOver) {
+        std::this_thread::sleep_for(5s);
+        --c.hunger;
     }
 
-    if (health == 0) {
-        isOver = true;
+    if (c.health == 0) {
+        c.isOver = true;
         system("cls");
         GameOver();
     }
 
-    if (hunger < 75 && hunger > 50) {
-        Sleep(2500);
-        mood -= (rand() % 3);
-        health -= 1;
+    if (c.hunger < 75 && c.hunger > 50) {
+        std::this_thread::sleep_for(3s);
+        c.mood -= (rand() % 3);
+        c.health -= 1;
     }
 
-    if (hunger <= 50 && hunger > 25) {
-        Sleep(1000);
-        mood -= (rand() % 4);
-        health -= 3;
+    if (c.hunger <= 50 && c.hunger > 25) {
+        std::this_thread::sleep_for(2s);
+        c.mood -= (rand() % 4);
+        c.health -= 3;
     }
 
-    if (hunger <= 25) {
-        mood -= (rand() % 5);
-        health -= 4;
+    if (c.hunger <= 25) {
+        std::this_thread::sleep_for(1s);
+        c.mood -= (rand() % 5);
+        c.health -= 4;
     }
-
-
 
 }
 
 void Check()
 {
-    if (hunger > 100)
-        hunger = 100;
-    if (mood > 100)
-        mood = 100;
-    if (health > 100)
-        health =100;
+    if (c.hunger > 100)
+        c.hunger = 100;
 
-    if (hunger < 0 )
-        hunger = 0;
-    if (mood < 0)
-        mood = 0;
-    if (health < 0)
-        health = 0;
+    if (c.mood > 100)
+        c.mood = 100;
+
+    if (c.health > 100)
+        c.health = 100;
+
+    if (c.hunger < 0 )
+        c.hunger = 0;
+
+    if (c.mood < 0)
+        c.mood = 0;
+
+    if (c.health < 0)
+        c.health = 0;
 }
+
 
 
 int main()
 {
-    srand(time(NULL));
     Start();
-    while (!isOver) {
+    while (!c.isOver) {
         Screen();
         Input();
         Logic();

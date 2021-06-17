@@ -1,9 +1,11 @@
 # depslib dependency file v1.0
-1622550936 source:d:\github\tamagotchi\tamagotchi\main.cpp
+1623952172 source:d:\github\tamagotchi\tamagotchi\main.cpp
 	<iostream>
 	<windows.h>
 	<conio.h>
-	<ctime>
 	<chrono>
 	<thread>
+	"config.h"
+
+1623951311 d:\github\tamagotchi\tamagotchi\config.h
 

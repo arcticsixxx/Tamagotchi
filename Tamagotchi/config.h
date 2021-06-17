@@ -12,7 +12,7 @@ public:
         std::cout << std::endl;
         std::cout << std::endl;
         std::cout << "                               +--------------+--------------+--------------+\n";
-        std::cout << "                                 HEALTH:"<<health<<"%\t  MOOD:"<<mood<<"%\tHUNGER:"<<hunger<<"%\n";
+        std::cout << "                                  HEALTH: "<<health / 10<<"\t MOOD: "<<mood<<"%\tHUNGER: "<<hunger<<"%\n";
         std::cout << "                               +--------------+--------------+--------------+\n";
         std::cout << "                               |                                            |\n";
         std::cout << "                               |                   $$            $$         |\n";

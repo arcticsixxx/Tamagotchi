@@ -3,7 +3,6 @@
 #include <thread>
 #include "config.h"
 
-
 State start {false};
 Pet cat {100, 100, 0};
 

@@ -3,8 +3,8 @@ class Pet
 {
 public:
     int health;
-    int hunger;
     int mood;
+    int hunger;
 
     void screen()
     {
@@ -12,7 +12,7 @@ public:
         std::cout << std::endl;
         std::cout << std::endl;
         std::cout << "                               +--------------+--------------+--------------+\n";
-        std::cout << "                               | HEALTH: "<<health<<"% | MOOD: "<<mood<<"%   | HUNGER: "<<hunger<<"%  |\n";
+        std::cout << "                                 HEALTH:"<<health<<"%\t  MOOD:"<<mood<<"%\tHUNGER:"<<hunger<<"%\n";
         std::cout << "                               +--------------+--------------+--------------+\n";
         std::cout << "                               |                                            |\n";
         std::cout << "                               |                   $$            $$         |\n";

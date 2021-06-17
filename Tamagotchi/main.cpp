@@ -1,14 +1,27 @@
 #include <iostream>
-#include <windows.h>
 #include <conio.h>
-#include <chrono>
 #include <thread>
 #include "config.h"
 
-using namespace std::chrono_literals;
 
 State start {false};
-Pet cat {100, 100, 100};
+Pet cat {100, 100, 0};
+
+bool timer(int n)
+{
+    long int lastTime = clock();
+    long int lastTimer = lastTime;
+    while(1)
+    {
+        long int currTime = clock();
+        long int timeDelta = currTime - lastTime;
+        long int timerDelta = currTime - lastTimer;
+        if ( timeDelta >= n) {
+            return true;
+            lastTime = currTime;
+        }
+    }
+}
 
 void Input()
 {
@@ -16,11 +29,11 @@ void Input()
         switch (_getch())
         {
         case 'z':
-            cat.hunger += 10;
+            cat.hunger -= 10;
             break;
         case 'x':
             cat.mood += 6;
-            cat.hunger -= 7;
+            cat.hunger += 7;
             break;
         case 'c':
             cat.health += 9;
@@ -36,30 +49,28 @@ void Input()
 
 void Logic()
 {
-
     if (!start.isOver) {
-        std::this_thread::sleep_for(3s);
-        --cat.hunger;
+        timer(1500);
+        ++cat.hunger;
     }
 
-    if (cat.hunger < 75 && cat.hunger > 50) {
-        std::this_thread::sleep_for(3s);
+    if (cat.hunger > 25 && cat.hunger < 50) {
+        timer(1500);
         cat.mood -= (rand() % 3);
         cat.health -= 1;
     }
 
-    if (cat.hunger <= 50 && cat.hunger > 25) {
-        std::this_thread::sleep_for(2s);
+    if (cat.hunger >= 50 && cat.hunger < 75) {
+        timer(1000);
         cat.mood -= (rand() % 4);
         cat.health -= 3;
     }
 
-    if (cat.hunger <= 25) {
-        std::this_thread::sleep_for(1s);
+    if (cat.hunger >= 75) {
+        timer(500);
         cat.mood -= (rand() % 5);
         cat.health -= 4;
     }
-
 }
 
 void Check()
@@ -93,7 +104,8 @@ int main()
 {
     while (!start.isOver) {
         cat.screen();
-        Input();
+        std::thread th(Input);
+        if (th.joinable()) th.join();
         Logic();
         Check();
     }
